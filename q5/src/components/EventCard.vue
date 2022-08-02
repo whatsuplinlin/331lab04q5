@@ -1,31 +1,25 @@
 <template>
+  <!-- <router-link
+    class="event-link"
+    :to="{ name: 'EventDetails', params: { id: event.id } }"
+  > -->
   <div class="event-card">
-    <h4>{{ event.first_name }} {{ event.last_name }}</h4>
+    <h2>{{ passenger.first_name }} {{ passenger.last_name }}</h2>
+    <h4>{{ passenger.email }}</h4>
   </div>
+  <!-- </router-link> -->
 </template>
-
 <script>
 export default {
   name: 'EventCard',
-  data() {
-    return {
-      event: {
-        id: 1,
-        first_name: 'Tiler',
-        last_name: 'Peile',
-        email: 'tpeile0@ycombinator.com',
-        gender: 'Male',
-        ip_address: '176.3.147.168',
-        Source: 'Oshnavīyeh',
-        Destination: 'Caobi',
-        travelDate: '6/16/2022',
-        airlineId: 2
-      }
+  props: {
+    passenger: {
+      type: Object,
+      required: true
     }
   }
 }
 </script>
-
 <style scoped>
 .event-card {
   padding: 20px;
@@ -38,5 +32,9 @@ export default {
 .event-card:hover {
   transform: scale(1.01);
   box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.2);
+}
+.event-link {
+  color: #2c3e50;
+  text-decoration: none;
 }
 </style>
