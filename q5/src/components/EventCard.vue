@@ -1,13 +1,13 @@
 <template>
-  <!-- <router-link
+  <router-link
     class="event-link"
-    :to="{ name: 'EventDetails', params: { id: event.id } }"
-  > -->
-  <div class="event-card">
-    <h2>{{ passenger.first_name }} {{ passenger.last_name }}</h2>
-    <h4>{{ passenger.email }}</h4>
-  </div>
-  <!-- </router-link> -->
+    :to="{ name: 'PassengerDetailView', params: { id: passenger.id } }"
+  >
+    <div class="event-card">
+      <h3>Name: {{ passenger.first_name }} {{ passenger.last_name }}</h3>
+      <h4>Date: {{ passenger.travelDate }}</h4>
+    </div>
+  </router-link>
 </template>
 <script>
 export default {
