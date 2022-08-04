@@ -36,7 +36,7 @@
 // @ is an alias to /src
 import EventCard from '../components/EventCard.vue'
 import EventService from '../service/EventService.js'
-import { watchEffect } from '@vue/runtime-core'
+// import { watchEffect } from '@vue/runtime-core'
 
 export default {
   name: 'PassengerView',
@@ -59,22 +59,53 @@ export default {
       totalPassenger: 0
     }
   },
-  created() {
-    watchEffect(() => {
-      EventService.getPassengers(this.page, this.perPage)
-        .then((response) => {
-          this.passengers = response.data
-          this.totalPassenger = response.headers['x-total-count'] //<--- Store it
+  // eslint-disable-next-line no-unused-vars
+  beforeRouteEnter(routeTo, routeFrom, next) {
+    EventService.getPassengers(
+      parseInt(routeTo.query.page) || 1,
+      parseInt(routeTo.query.perPage) || 3
+    )
+      .then((response) => {
+        next((comp) => {
+          comp.passengers = response.data
+          comp.totalPassenger = response.headers['x-total-count']
         })
-        .catch((error) => {
-          console.log(error)
-        })
-    })
+      })
+
+      .catch(() => {
+        next({ name: 'NetworkError' })
+      })
   },
+  beforeRouteUpdate(routeTo, routeFrom, next) {
+    EventService.getPassengers(
+      parseInt(routeTo.query.page) || 1,
+      parseInt(routeTo.query.perPage) || 3
+    )
+      .then((response) => {
+        this.passengers = response.data
+        this.totalPassenger = response.headers['x-total-count']
+        next()
+      })
+      .catch(() => {
+        next({ name: 'NetworkError' })
+      })
+  },
+  // created() {
+  //   watchEffect(() => {
+  //     EventService.getPassengers(this.page, this.perPage)
+  //       .then((response) => {
+  //         this.passengers = response.data
+  //         this.totalPassenger = response.headers['x-total-count'] //<--- Store it
+  //       })
+  //       .catch((error) => {
+  //         console.log(error)
+  //       })
+  //   })
+  // },
   computed: {
     hasNextPage() {
       //First, calculate total pages
-      let totalPages = Math.ceil(this.totalPassenger / this.perPage)
+      let totalPages = Math.ceil(this.totalPassenger / 3)
 
       //Then check to see if the current page is less than the total pages
       return this.page < totalPages

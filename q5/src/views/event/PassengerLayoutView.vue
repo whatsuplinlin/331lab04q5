@@ -1,5 +1,5 @@
 <template>
-  <div v-if="passenger">
+  <div v-if="GStore.passenger">
     <div id="nav">
       <router-link :to="{ name: 'PassengerDetailView' }">
         Passenger Details
@@ -8,51 +8,17 @@
       <router-link :to="{ name: 'AirLineDetailView' }">
         AirLine Detail
       </router-link>
-      |
-      <router-link :to="{ name: 'EventEdit' }">Edit</router-link>
     </div>
-    <router-view :passenger="passenger" :airline="airline" />
+    <router-view :passenger="GStore.passenger" :airline="GStore.airline" />
   </div>
 </template>
 
 <script>
-import EventService from '@/service/EventService.js'
 export default {
-  props: ['id'],
-  data() {
-    return {
-      passenger: null,
-      airline: null
-    }
-  },
-  created() {
-    EventService.getPassenger(this.id)
-      .then((response) => {
-        this.passenger = response.data
-      })
-      .catch((error) => {
-        if (error.response) {
-          this.$router.push({
-            name: '404Resource',
-            params: { resource: 'passenger' }
-          })
-        }
-      })
-    EventService.getAirLine(this.id)
-      .then((response) => {
-        this.airline = response.data
-      })
-      .catch((error) => {
-        if (error.response) {
-          this.$router.push({
-            name: '404Resource',
-            params: { resource: 'passenger' }
-          })
-        }
-      })
-  }
+  inject: ['GStore']
 }
 </script>
+
 <style scoped>
 #nav a {
   flex: 1;
