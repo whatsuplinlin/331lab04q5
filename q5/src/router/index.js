@@ -5,6 +5,7 @@ import PassengerDetailView from '../views/event/PassengerDetailView.vue'
 import PassengerLayoutView from '../views/event/PassengerLayoutView.vue'
 import AirLineDetailView from '../views/event/AirLineDetailView.vue'
 import NotFoundView from '../views/NotFoundView.vue'
+import EventEditView from '@/views/event/EventEditView.vue'
 const routes = [
   {
     path: '/',
@@ -37,6 +38,12 @@ const routes = [
         name: 'AirLineDetailView',
         component: AirLineDetailView,
         props: true
+      },
+      {
+        path: 'edit',
+        name: 'EventEdit',
+        props: true,
+        component: EventEditView
       }
     ]
   },

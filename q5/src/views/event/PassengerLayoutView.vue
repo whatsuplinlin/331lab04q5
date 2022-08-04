@@ -8,6 +8,8 @@
       <router-link :to="{ name: 'AirLineDetailView' }">
         AirLine Detail
       </router-link>
+      |
+      <router-link :to="{ name: 'EventEdit' }">Edit</router-link>
     </div>
     <router-view :passenger="passenger" :airline="airline" />
   </div>
